@@ -1,0 +1,25 @@
+Создаём фичи для TimeSeries
+
+Фичи для тренда 
+
+from statsmodels.tsa.deterministic import DeterministicProcess
+
+dp = DeterministicProcess(
+    index=tunnel.index,  # dates from the training data
+    constant=True,       # dummy feature for the bias (y_intercept)
+    order=1,             # the time dummy (trend) 1 for linear, 2 for quadratic, 3 for cubic, and so on.
+    drop=True,           # drop terms if necessary to avoid collinearity
+)
+# `in_sample` creates features for the dates given in the `index` argument
+X = dp.in_sample()
+
+Удаляем интерсепт, тк мы уже его создали в Х, а линейные модели не любят дублирование фичей
+
+model = LinearRegression(fit_intercept=False)
+model.fit(X, y)
+y_pred = pd.Series(model.predict(X), index=X.index)
+
+Строим прогноз на 30 точек вперёд
+X = dp.out_of_sample(steps=30)
+
+y_fore = pd.Series(model.predict(X), index=X.index)

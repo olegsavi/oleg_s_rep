@@ -1,6 +1,7 @@
 Создаём фичи для TimeSeries
 
-Фичи для тренда 
+Фичи для тренда
+# Добавить описание глав 
 
 from statsmodels.tsa.deterministic import DeterministicProcess
 

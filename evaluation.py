@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-
+#my course to delete
 
 def downvote_seen_items(scores, data, data_description):
     userid = data_description['users']
